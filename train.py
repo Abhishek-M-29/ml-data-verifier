@@ -5,12 +5,17 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from blockchain import Blockchain
 
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
+
 def hash_row(row):
     """
     Hash a single row of data using SHA-256.
     """
-    row_string = ",".join(map(str, row))
-    return hashlib.sha256(row_string.encode()).hexdigest()
+    row_string = ",".join(map(lambda x: f"{x:.1f}" if isinstance(x, float) else str(x), row))
+    hashed = hashlib.sha256(row_string.encode()).hexdigest()
+    print(f"Hashing row: {row_string} -> {hashed}")
+    return hashed
 
 def train_model():
     """
@@ -35,12 +40,15 @@ def train_model():
     for _, row in X_train.iterrows():
         hashed_row = hash_row(row)
         blockchain.add_block(hashed_row)
+        print(f"Training row: {row}, Hash: {hashed_row}")
 
     # Save the trained model
     with open("model.pkl", "wb") as file:
         pickle.dump(model, file)
 
     print("Model trained and saved as model.pkl.")
+    for block in blockchain.chain:
+        print(f"Block {block.index}: {block.data}")
     print("Blockchain created with training data.")
 
 if __name__ == "__main__":
