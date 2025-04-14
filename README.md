@@ -12,6 +12,11 @@ ML Data Verifier is a tool designed to validate and preprocess datasets for mach
 - **Custom Rules**: Allow the definition of custom validation rules tailored to specific needs.
 - **Reports**: Generate comprehensive reports on dataset quality.
 
+## How it works
+
+![Untitled diagram-2025-04-14-172936](https://github.com/user-attachments/assets/08b814d1-dda1-413c-850b-1253b054b83e)
+
+
 ## Installation
 
 To get started, clone the repository and install the required dependencies:
